@@ -1,8 +1,5 @@
 package lv.venta.models;
 
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -58,7 +55,10 @@ public class Product {
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		if(title!=null && title.matches("[A-Z]{1}[a-z]+"))
+			this.title = title;
+		else
+			this.title="";
 	}
 
 	public float getPrice() {
@@ -66,7 +66,10 @@ public class Product {
 	}
 
 	public void setPrice(float price) {
-		this.price = price;
+		if(price>0)
+			this.price = price;
+		else
+			this.price = 0;
 	}
 
 	public String getDescription() {
@@ -74,7 +77,10 @@ public class Product {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		if(description!=null && description.matches("[A-Z]{1}[a-z]+"))
+			this.description = description;
+		else
+			this.description = "";
 	}
 
 	public int getQuantity() {
@@ -82,17 +88,24 @@ public class Product {
 	}
 
 	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+		if(quantity > 0)
+			this.quantity = quantity;
+		else
+			this.quantity = 0;
 	}
 
 	public Product(String title, float price, String description, int quantity) {
-		this.title = title;
-		this.price = price;
-		this.description = description;
-		this.quantity = quantity;
+	setTitle(title);
+	setDescription(description);
+	setPrice(price);
+	setQuantity(quantity);
 	}
 
 	public Product() {
+		setDescription("");
+		setTitle("");
+		setPrice(0);
+		setQuantity(0);
 	}
 
 }
